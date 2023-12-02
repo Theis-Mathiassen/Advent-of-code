@@ -23,11 +23,11 @@ def word2num (str):
     else:
         return int(str)
 
-with open('input2.txt') as f:
+with open('1/input2.txt') as f:
     lines = f.readlines()
     total = 0
     for line in lines:
-        numbers = re.findall(r'(one|two|three|four|five|six|seven|eight|nine|\d)*', line)
+        numbers = re.findall(r'(one|two|three|four|five|six|seven|eight|nine|\d)', line)
         transformed = []
         for number in numbers:
             if (number != ''):
@@ -36,7 +36,10 @@ with open('input2.txt') as f:
         if (len(transformed) > 0):
             lineNumber = transformed[0] * 10 + transformed[len(transformed)-1]
             total += lineNumber
-            print(lineNumber)
+            #print(lineNumber)
+            #print(line)
+        else:
+            print("No result?")
     print(total)
     
     
