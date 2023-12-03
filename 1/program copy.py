@@ -1,5 +1,12 @@
 import re
 
+def find_all(a_str, sub):
+    start = 0
+    while True:
+        start = a_str.find(sub, start)
+        if start == -1: return
+        yield start
+        start += len(sub) # use start += 1 to find overlapping matches
 
 def word2num (str):
     if (str == "one"):
@@ -23,17 +30,21 @@ def word2num (str):
     else:
         return int(str)
 
+symbols = ["one","two","three","four","five","six","seven","eight","nine","1","2","3","4","5","6","7","8","9"]
 
 with open('1/input2.txt') as f:
     lines = f.readlines()
     total = 0
     for line in lines:
-        numbers = re.findall(r'(one|two|three|four|five|six|seven|eight|nine|\d)', line)
+        number_indexes = [0] * len(line)
+        for symbol in symbols:
+            finds = list(find_all(line, symbol))
+            for found in finds:
+                number_indexes[found] = word2num(symbol)
         transformed = []
-        for number in numbers:
-            if (number != ''):
-                transformed.append(word2num(number))
-                
+        for value in number_indexes:
+            if (value != 0):
+                transformed.append(value)
         if (len(transformed) > 0):
             lineNumber = transformed[0] * 10 + transformed[len(transformed)-1]
             total += lineNumber
